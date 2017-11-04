@@ -1,0 +1,38 @@
+{
+  "name": "machinepack-7daystodiewebapi",
+  "version": "0.1.0",
+  "description": "Interact with a 7 Days to Die web API",
+  "scripts": {
+    "test": "node ./node_modules/test-machinepack-mocha/bin/testmachinepack-mocha.js"
+  },
+  "keywords": [
+    "7 days to die web api",
+    "machines",
+    "machinepack"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "machine": "^12.2.5",
+    "request": "^2.83.0",
+    "request-promise-native": "^1.0.5"
+  },
+  "devDependencies": {
+    "test-machinepack-mocha": "^2.1.5"
+  },
+  "machinepack": {
+    "friendlyName": "7 days to die web api",
+    "machineDir": "machines/",
+    "machines": [
+      "send-request",
+      "execute-command",
+      "get-allowed-commands",
+      "get-server-info",
+      "get-player-inventory",
+      "get-player-list",
+      "get-online-players",
+      "get-stats"
+    ],
+    "testsUrl": "https://travis-ci.org/"
+  }
+}
