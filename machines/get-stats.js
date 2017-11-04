@@ -60,6 +60,17 @@ module.exports = {
       description: 'Done.',
     },
 
+    connectionRefused: {
+      variableName: 'error',
+      description: 'Server refused the request (usually means server offline)'
+    },
+
+    unauthorized: {
+      variableName: 'error',
+      description: 'Not authorized to do this request',
+      extendedDescription: 'Server rejected the auth info sent. Please check if the server has auth name and token configured'
+    },
+
     requestError: {
       variableName: 'error',
       description: 'An error occured when performing the request.'
@@ -83,10 +94,10 @@ module.exports = {
         return exits.success(result)
       },
       connectionRefused: function(error) {
-        return exits.requestError(error)
+        return exits.connectionRefused(error)
       },
       unauthorized: function(error) {
-        return exits.requestError(error)
+        return exits.unauthorized(error)
       },
       error: function(error) {
         return exits.requestError(error)
