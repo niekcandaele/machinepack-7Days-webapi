@@ -58,7 +58,7 @@ module.exports = {
     extraqs: {
       type: "json",
       example: {
-        steamdid: "245932509350928"
+        steamid: "245932509350928"
       },
       description: "Extra parameters for the request",
       extendedDescription: "Extra query string to send along with the request. Dependent on which endpoint you're trying to reach"
@@ -86,6 +86,10 @@ module.exports = {
     badEndpoint: {
       variableName: 'error',
       description: 'Nothing found at specified endpoint'
+    },
+
+    badRequest: {
+      description: "Something went wrong when doing the request, review the inputs please"
     },
 
     error: {
@@ -118,11 +122,13 @@ module.exports = {
           if (error.statusCode == 404) {
             return exits.badEndpoint(error.message)
           }
+          if (error.statusCode == 500) {
+            return exits.badRequest(error.message)
+          }
 
           if (error.error.code == "ECONNREFUSED") {
             return exits.connectionRefused(error.message)
           }
-
           return exits.error(error.error.code)
         })
     }
@@ -141,7 +147,7 @@ module.exports = {
           }
         };
         if (inputs.extraqs) {
-          requestOptions.qs = Object.assign(requestOptions.qs, extraqs)
+          requestOptions.qs = Object.assign(requestOptions.qs, inputs.extraqs)
         }
         return requestOptions
 
