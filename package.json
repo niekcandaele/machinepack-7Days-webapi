@@ -37,7 +37,8 @@
       "get-player-list",
       "get-online-players",
       "get-stats",
-      "kick-player"
+      "kick-player",
+      "send-message"
     ],
     "testsUrl": "https://travis-ci.org/"
   }
