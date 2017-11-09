@@ -84,7 +84,10 @@ module.exports = {
       port: inputs.port,
       authName: inputs.authName,
       authToken: inputs.authToken,
-      apiModule: "getplayerlist"
+      apiModule: "getplayerlist",
+      extraqs: {
+        rowsperpage: 99999
+      }
     }).exec({
       success: function(result) {
         return exits.success(result)
