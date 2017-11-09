@@ -13,6 +13,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "lodash": "^4.17.4",
     "machine": "^12.2.5",
     "request": "^2.83.0",
     "request-promise-native": "^1.0.5"
@@ -35,7 +36,8 @@
       "get-player-inventory",
       "get-player-list",
       "get-online-players",
-      "get-stats"
+      "get-stats",
+      "kick-player"
     ],
     "testsUrl": "https://travis-ci.org/"
   }
