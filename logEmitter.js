@@ -74,9 +74,26 @@ class logEmitter extends EventEmitter {
                     if (failed) {
                         eventEmitter.emit("connected")
                         failed = false
-                    }
-                    _.each(response.entries, function(line) {
 
+                        // Get the latest log line #
+                        sendRequest({
+                            ip: ip,
+                            port: port,
+                            authName: authName,
+                            authToken: authToken,
+                            apiModule: "getwebuiupdates",
+                        }).exec({
+                            error: function(error) {
+                                console.log("Error getting latest log line " + error)
+                            },
+                            success: function(response) {
+                                lastLogLine = response.newlogs
+                            },
+                        });
+                    };
+
+
+                    _.each(response.entries, function(line) {
                         handleLog(line);
 
                         function handleLog(logLine) {
