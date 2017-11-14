@@ -1,6 +1,7 @@
 const EventEmitter = require('events');
 const _ = require("lodash")
 var sendRequest = require('machine').build(require('./machines/send-request.js'))
+var handleLogLine = require('machine').build(require('./machines/handle-log-line'))
 
 process.on('unhandledRejection', (reason, p) => {
     console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
@@ -94,13 +95,15 @@ class logEmitter extends EventEmitter {
 
 
                     _.each(response.entries, function(line) {
-                        handleLog(line);
+                        handleLogLine({ logLine: line }).exec({
+                            chatMessage: function(chatMessage) {
+                                eventEmitter.emit('chatMessage', chatMessage)
+                            },
+                            error: function(error) {
+                                throw error
+                            }
+                        })
 
-                        function handleLog(logLine) {
-                            eventEmitter.emit("logLine", logLine)
-                            console.log(logLine)
-
-                        }
                     })
                 },
             })
