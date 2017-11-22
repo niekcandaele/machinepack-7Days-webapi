@@ -39,7 +39,10 @@ class logEmitter extends EventEmitter {
             apiModule: "getwebuiupdates",
         }).exec({
             error: function(error) {
-                throw error
+                if (!failed) {
+                    failed = true
+                    eventEmitter.emit("connectionLost", error)
+                }
             },
             success: function(response) {
                 eventEmitter.emit("connected")
