@@ -123,7 +123,6 @@ module.exports = {
             let steamID = logMsg[3].replace("steamid=", "").trim()
             let steamOwner = logMsg[4].replace("steamOwner=", "").trim()
             let ip = logMsg[5].replace("ip=", "").trim()
-            let country = ipCountry.country(ip)
 
             let connectedMsg = {
                 entityID,
@@ -131,7 +130,6 @@ module.exports = {
                 steamID,
                 steamOwner,
                 ip,
-                country,
                 date,
                 time
             }

@@ -102,8 +102,17 @@ class logEmitter extends EventEmitter {
                             chatMessage: function(chatMessage) {
                                 eventEmitter.emit('chatMessage', chatMessage)
                             },
+                            playerConnected: function(connectedMsg) {
+                                eventEmitter.emit('playerConnected', connectedMsg)
+                            },
+                            playerDisconnected: function(disconnectedMsg) {
+                                eventEmitter.emit('playerDisconnected', disconnectedMsg)
+                            },
+                            playerDeath: function(deathMessage) {
+                                eventEmitter.emit('playerDeath', deathMessage)
+                            },
                             error: function(error) {
-                                throw error
+                                eventEmitter.emit('error', error)
                             }
                         })
 
