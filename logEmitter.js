@@ -98,6 +98,7 @@ class logEmitter extends EventEmitter {
 
 
                     _.each(response.entries, function(line) {
+                        eventEmitter.emit('logLine', line);
                         handleLogLine({ logLine: line }).exec({
                             chatMessage: function(chatMessage) {
                                 eventEmitter.emit('chatMessage', chatMessage)
