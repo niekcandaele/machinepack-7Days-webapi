@@ -29,9 +29,13 @@ Learn more at <a href="http://node-machine.org/implementing/FAQ" title="Machine 
 To run the tests, set up a 7DTD server to test on. Then create a file ".env" in the root folder and add these env variables:
 
 TEST_IP
+
 TEST_PORT <- Allocs webserver port
+
 TEST_AUTHNAME <- Set in webpermission.xml or with the telnet command
+
 TEST_AUTHTOKEN
+
 TEST_STEAMID <- SteamID of a player that has been on the server
 
 
