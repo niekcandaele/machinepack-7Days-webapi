@@ -32,6 +32,7 @@ TEST_IP
 TEST_PORT <- Allocs webserver port
 TEST_AUTHNAME <- Set in webpermission.xml or with the telnet command
 TEST_AUTHTOKEN
+TEST_STEAMID <- SteamID of a player that has been on the server
 
 
 ## License
