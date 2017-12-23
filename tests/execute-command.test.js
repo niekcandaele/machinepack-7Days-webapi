@@ -34,13 +34,13 @@ describe('Execute-command', function () {
             command: 'helperinos'
         }).exec({
             error: function (err) {
-                done(err);
+                done(new Error(err));
             },
             unknownCommand: function(err) {
                 done()
             },
             success: function (data) {
-                done(`Success but should have errored!`)
+                done(new Error(`Success but should have errored!`))
             }
         })
     });
@@ -66,7 +66,7 @@ describe('Execute-command', function () {
     });
     it('Should exit with connectionRefused exit if bad connect info', function(done) {
         executeCommand({
-            ip: ip + "invalidSyntax",
+            ip: '192.168.1.1',
             port: port,
             authName: authName,
             authToken: authToken,
@@ -79,7 +79,7 @@ describe('Execute-command', function () {
                 done()
             },
             success: function (data) {
-                done(`Function succes but should have errored!`)
+                done(new Error(`Function succes but should have errored!`))
             }
         })
     })

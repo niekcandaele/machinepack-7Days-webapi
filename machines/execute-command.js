@@ -108,8 +108,11 @@ module.exports = {
       unauthorized: function(error) {
         return exits.unauthorized(error)
       },
-      notImplemented: function(error) {
-        return exits.unknownCommand(error)
+      internalError: function(error) {
+        if (error == `501 - "Unknown command"`) {
+          return exits.unknownCommand(error);
+        }
+        return exits.error(error)
       },
       badRequest: function(error) {
         return exits.error(error)
