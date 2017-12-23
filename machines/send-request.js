@@ -88,11 +88,7 @@ module.exports = {
             description: 'Nothing found at specified endpoint'
         },
 
-        badRequest: {
-            description: "Something went wrong when doing the request, review the inputs please"
-        },
-
-        notImplemented: {
+        internalError: {
             description: "Internal server error"
         },
 
@@ -126,11 +122,8 @@ module.exports = {
                     if (error.statusCode == 404) {
                         return exits.badEndpoint(error.message)
                     }
-                    if (error.statusCode == 500) {
-                        return exits.badRequest(error.message)
-                    }
-                    if (error.statusCode == 501) {
-                        return exits.notImplemented(error.message)
+                    if (error.statusCode == 500 || error.statusCode == 501) {
+                        return exits.internalError(error.message)
                     }
                     if (!_.isUndefined(error.error)) {
                         if (error.error.code == "ECONNREFUSED") {
