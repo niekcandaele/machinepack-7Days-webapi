@@ -48,9 +48,9 @@ module.exports = {
       }
     },
 
-    steamID: {
+    steamId: {
       description: 'Steam ID of the player to look up inventory of',
-      example: 76561198028175941,
+      example: "76561198028175941",
       required: true
     },
   },
@@ -74,7 +74,7 @@ module.exports = {
       extendedDescription: 'Server rejected the auth info sent. Please check if the server has auth name and token configured'
     },
 
-    badSteamID: {
+    badSteamId: {
       description: "You have entered an invalid steam ID"
     },
 
@@ -85,9 +85,8 @@ module.exports = {
   },
 
 
-  fn: function(inputs, exits) {
+  fn: function (inputs, exits) {
     const doRequest = require('machine').build(require('./send-request.js'))
-    console.log(inputs.steamID)
     doRequest({
       ip: inputs.ip,
       port: inputs.port,
@@ -95,27 +94,24 @@ module.exports = {
       authToken: inputs.authToken,
       apiModule: "getplayerinventory",
       extraqs: {
-        steamid: inputs.steamID
+        steamid: inputs.steamId
       }
     }).exec({
-      success: function(result) {
+      success: function (result) {
         return exits.success(result)
       },
-      connectionRefused: function(error) {
+      connectionRefused: function (error) {
         return exits.connectionRefused(error)
       },
-      unauthorized: function(error) {
+      unauthorized: function (error) {
         return exits.unauthorized(error)
       },
-      badRequest: function(error) {
-        return exits.badSteamID(error)
+      internalError: function (error) {
+        return exits.badSteamId(error)
       },
-      error: function(error) {
+      error: function (error) {
         return exits.error(error)
       }
     })
   },
-
-
-
 };
