@@ -50,7 +50,7 @@ module.exports = {
             }
         },
 
-        playerID: {
+        playerId: {
             type: 'string',
             description: 'Steam ID of the player to kick',
             example: '76561198028175841',
@@ -109,7 +109,7 @@ module.exports = {
             port: inputs.port,
             authName: inputs.authName,
             authToken: inputs.authToken,
-            command: `kick ${inputs.playerID} ${reason}`
+            command: `kick ${inputs.playerId} ${reason}`
         }).exec({
             success: function(response) {
                 if (response.result == '*** ERROR: Executing command \'kick\' failed: Object reference not set to an instance of an object\n') {
