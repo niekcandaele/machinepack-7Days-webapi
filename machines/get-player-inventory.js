@@ -49,9 +49,8 @@ module.exports = {
     },
 
     steamID: {
-      type: "string",
       description: 'Steam ID of the player to look up inventory of',
-      example: "76561198028175941",
+      example: 76561198028175941,
       required: true
     },
   },
@@ -88,7 +87,7 @@ module.exports = {
 
   fn: function(inputs, exits) {
     const doRequest = require('machine').build(require('./send-request.js'))
-
+    console.log(inputs.steamID)
     doRequest({
       ip: inputs.ip,
       port: inputs.port,

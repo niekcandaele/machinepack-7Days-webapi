@@ -33,7 +33,6 @@ describe('Send request', function() {
             apiModule: 'getstats'
         }).exec({
             error: function(err) {
-                console.log(err)
                 done(new Error(`Exited with error, but should have specified connectionRefused`))
             },
             connectionRefused: function(err) {
