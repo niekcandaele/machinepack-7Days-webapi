@@ -7,8 +7,11 @@ const ip = process.env.TEST_IP,
   authName = process.env.TEST_AUTHNAME,
   authToken = process.env.TEST_AUTHTOKEN
 
+  let fakePort = parseInt(port) + 1
+
 
 describe('Execute-command', function () {
+
     it('Should exit with success if valid info given', function(done) {
         executeCommand({
             ip: ip,
@@ -66,14 +69,14 @@ describe('Execute-command', function () {
     });
     it('Should exit with connectionRefused exit if bad connect info', function(done) {
         executeCommand({
-            ip: '192.168.1.1',
-            port: port,
+            ip: ip,
+            port: fakePort,
             authName: authName,
             authToken: authToken,
             command: 'help'
         }).exec({
             error: function (err) {
-                done(new Error(`Errored but should have exited with connectionRefused`));
+                done(err);
             },
             connectionRefused: function(err) {
                 done()

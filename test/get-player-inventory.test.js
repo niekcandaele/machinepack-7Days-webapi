@@ -8,6 +8,8 @@ const ip = process.env.TEST_IP,
     authToken = process.env.TEST_AUTHTOKEN,
     steamId = process.env.TEST_STEAMID
 
+  let fakePort = parseInt(port) + 1
+
 describe('Get player inventory', function () {
     it('Should exit success with valid info', function (done) {
         getplayerInventory({
@@ -71,8 +73,8 @@ describe('Get player inventory', function () {
     });
     it('Should return connection refused with invalid connection info', function (done) {
         getplayerInventory({
-            ip: "192.168.1.1",
-            port: port,
+            ip: ip,
+            port: fakePort,
             authName: authName,
             authToken: authToken,
             steamId: steamId

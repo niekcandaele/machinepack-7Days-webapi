@@ -7,6 +7,8 @@ const ip = process.env.TEST_IP,
     authName = process.env.TEST_AUTHNAME,
     authToken = process.env.TEST_AUTHTOKEN
 
+  let fakePort = parseInt(port) + 1
+
 describe('Get server info', function() {
     it('Should return success with valid info', function(done) {
         getServerInfo({
@@ -25,8 +27,8 @@ describe('Get server info', function() {
     });
     it('Should error with invalid connection info', function(done) {
         getServerInfo({
-            ip: "192.168.1.1",
-            port: port,
+            ip: ip,
+            port: fakePort,
             authName: authName,
             authToken: authToken
         }).exec({

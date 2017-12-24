@@ -3,7 +3,7 @@
   "version": "0.3.1",
   "description": "Interact with a 7 Days to Die web API",
   "scripts": {
-    "test": "mocha ./tests/*.test.js"
+    "test": "mocha --timeout 10000 ./tests/*.test.js"
   },
   "keywords": [
     "7 days to die web api",

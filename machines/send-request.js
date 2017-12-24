@@ -126,7 +126,7 @@ module.exports = {
                         return exits.internalError(error.message)
                     }
                     if (!_.isUndefined(error.error)) {
-                        if (error.error.code == "ECONNREFUSED") {
+                        if (error.error.code == "ECONNREFUSED" || error.error.code == "EHOSTUNREACH") {
                             return exits.connectionRefused(error.message)
                         }
                     }

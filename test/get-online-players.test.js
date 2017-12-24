@@ -7,6 +7,8 @@ const ip = process.env.TEST_IP,
     authName = process.env.TEST_AUTHNAME,
     authToken = process.env.TEST_AUTHTOKEN
 
+  let fakePort = parseInt(port) + 1
+
 describe('Get online players', function () {
     it('Should exit success with valid info', function (done) {
         getOnlinePlayers({
@@ -61,8 +63,8 @@ describe('Get online players', function () {
     });
     it('Should exit connectionRefused with invalid connection info', function (done) {
         getOnlinePlayers({
-            ip: '192.168.1.1',
-            port: port,
+            ip: ip,
+            port: fakePort,
             authName: authName,
             authToken: authToken
         }).exec({
