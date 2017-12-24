@@ -8,7 +8,7 @@
 Interact with a 7 Days to Die web API
 
 
-## Installation &nbsp; [![NPM version](https://badge.fury.io/js/machinepack-7daystodiewebapi.svg)](http://badge.fury.io/js/machinepack-7daystodiewebapi) [![Build Status](https://travis-ci.org/.png?branch=master)](https://travis-ci.org/)
+## Installation &nbsp; [![NPM version](https://badge.fury.io/js/machinepack-7daystodiewebapi.svg)](http://badge.fury.io/js/machinepack-7daystodiewebapi) [![Build Status](https://travis-ci.org/niekcandaele/machinepack-7Days-webapi#)](https://travis-ci.org/)
 
 ```sh
 $ npm install machinepack-7daystodiewebapi
