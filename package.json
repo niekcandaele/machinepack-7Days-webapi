@@ -45,7 +45,8 @@
       "send-message",
       "start-logging-events",
       "handle-log-line",
-      "ban-player"
+      "ban-player",
+      "give-item"
     ],
     "testsUrl": "https://travis-ci.org/"
   }
