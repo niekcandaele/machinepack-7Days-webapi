@@ -1,10 +1,13 @@
+const _ = require("lodash")
+var executeCommand = require('machine').build(require('./execute-command.js'))
+
 module.exports = {
 
 
-  friendlyName: 'Get player inventory',
+  friendlyName: 'Ban player',
 
 
-  description: 'Get the contents of a players inventory',
+  description: 'Ban a player from the server',
 
 
   cacheable: false,
@@ -34,6 +37,7 @@ module.exports = {
       type: 'string',
       description: 'Authorization name to send with the request',
       example: "csmm",
+      required: true,
       whereToGet: {
         description: 'Set in webpermission.xml or with webtokens telnet command'
       }
@@ -43,16 +47,35 @@ module.exports = {
       type: 'string',
       description: 'Authorization token to send with the request',
       example: "EOGHZANOIZEAHZFUR93573298539242F3NG",
+      required: true,
       whereToGet: {
         description: 'Set in webpermission.xml or with webtokens telnet command'
       }
     },
 
-    steamId: {
-      description: 'Steam ID of the player to look up inventory of',
-      example: "76561198028175941",
+    playerId: {
+      type: 'string',
+      description: 'Steam ID / entity id / name of the player to ban',
+      example: '76561198028175841',
       required: true
     },
+
+    reason: {
+      type: 'string',
+      description: 'Reason for banning the player',
+      example: "Spamming the chat"
+    },
+
+    duration: {
+      type: 'number',
+      example: 5,
+      required: true
+    },
+    durationUnit: {
+      type: 'string',
+      example: 'minutes',
+      required: true
+    }
   },
 
 
@@ -60,7 +83,7 @@ module.exports = {
 
     success: {
       variableName: 'result',
-      description: 'Done.',
+      description: 'Player was banned',
     },
 
     connectionRefused: {
@@ -74,31 +97,40 @@ module.exports = {
       extendedDescription: 'Server rejected the auth info sent. Please check if the server has auth name and token configured'
     },
 
-    badSteamId: {
-      description: "You have entered an invalid steam ID"
+    badDuration: {
+        description: 'Please provide a valid unit of duration'
     },
 
     error: {
+      variableName: 'error',
       description: "An unknown error occurred"
-    }
+    },
+
+    unknownPlayer: {
+      variableName: 'error',
+      description: "The given player id is not valid"
+    },
 
   },
 
 
   fn: function (inputs, exits) {
-    const doRequest = require('machine').build(require('./send-request.js'))
-    doRequest({
+
+    if (!validateDuration()) {
+        return exits.badDuration()
+    } 
+
+    // ban add <name / entity id / steam id> <duration> <duration unit> [reason]
+    executeCommand({
       ip: inputs.ip,
       port: inputs.port,
       authName: inputs.authName,
       authToken: inputs.authToken,
-      apiModule: "getplayerinventory",
-      extraqs: {
-        steamid: inputs.steamId
-      }
+      command: `ban add ${inputs.playerId} ${inputs.duration} ${inputs.durationUnit} ${inputs.reason}`
     }).exec({
-      success: function (result) {
-        return exits.success(result)
+      success: function (response) {
+        return exits.success(response)
+
       },
       connectionRefused: function (error) {
         return exits.connectionRefused(error)
@@ -106,12 +138,18 @@ module.exports = {
       unauthorized: function (error) {
         return exits.unauthorized(error)
       },
-      internalError: function (error) {
-        return exits.badSteamId(error)
-      },
       error: function (error) {
         return exits.error(error)
       }
     })
+
+
+    function validateDuration() {
+      let validDurationUnits = ["minutes", "hours", "days", "weeks", "months", "years"];
+      return validDurationUnits.includes(inputs.durationUnit)
+    }
   },
+
+
+
 };

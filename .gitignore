@@ -24,9 +24,11 @@ nbproject
 # Tests
 ############################
 coverage
+.env
 
 
 ############################
 # Other
 ############################
 .node_history
+.vscode/

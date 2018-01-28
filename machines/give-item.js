@@ -1,10 +1,13 @@
+const _ = require("lodash")
+var executeCommand = require('machine').build(require('./execute-command.js'))
+
 module.exports = {
 
 
-  friendlyName: 'Get player inventory',
+  friendlyName: 'Give item(s) to player',
 
 
-  description: 'Get the contents of a players inventory',
+  description: 'Execute the give command',
 
 
   cacheable: false,
@@ -34,6 +37,7 @@ module.exports = {
       type: 'string',
       description: 'Authorization name to send with the request',
       example: "csmm",
+      required: true,
       whereToGet: {
         description: 'Set in webpermission.xml or with webtokens telnet command'
       }
@@ -43,21 +47,36 @@ module.exports = {
       type: 'string',
       description: 'Authorization token to send with the request',
       example: "EOGHZANOIZEAHZFUR93573298539242F3NG",
+      required: true,
       whereToGet: {
         description: 'Set in webpermission.xml or with webtokens telnet command'
       }
     },
-
-    steamId: {
-      description: 'Steam ID of the player to look up inventory of',
-      example: "76561198028175941",
+    entityId: {
+      type: 'string',
+      description: 'Entity ID of the player',
+      example: '171',
       required: true
     },
+    amount: {
+      type: 'number',
+      example: '5',
+      required: true
+    },
+    itemName: {
+      type: 'string',
+      example: "meatStew",
+      required: true
+    },
+    quality: {
+      example: '120',
+      type: 'number'
+    }
+
   },
 
 
   exits: {
-
     success: {
       variableName: 'result',
       description: 'Done.',
@@ -74,31 +93,53 @@ module.exports = {
       extendedDescription: 'Server rejected the auth info sent. Please check if the server has auth name and token configured'
     },
 
-    badSteamId: {
-      description: "You have entered an invalid steam ID"
+    requestError: {
+      variableName: 'error',
+      description: 'An error occured when performing the request.'
     },
 
-    error: {
-      description: "An unknown error occurred"
+    playerNotFound: {
+      description: "Did not find a player with given entity ID"
+    },
+
+    itemNotFound: {
+      description: "Invalid item name"
     }
 
   },
 
+  //   Usage:
+  //    give <name / entity id> <item name> <amount>
+  //    give <name / entity id> <item name> <amount> <quality>
+  // Either pass the full name of a player or his entity id (given by e.g. "lpi").
+  // Item name has to be the exact name of an item as listed by "listitems".
+  // Amount is the number of instances of this item to drop (as a single stack).
+  // Quality is the quality of the dropped items for items that have a quality.
+
 
   fn: function (inputs, exits) {
-    const doRequest = require('machine').build(require('./send-request.js'))
-    doRequest({
+
+    executeCommand({
       ip: inputs.ip,
       port: inputs.port,
       authName: inputs.authName,
       authToken: inputs.authToken,
-      apiModule: "getplayerinventory",
-      extraqs: {
-        steamid: inputs.steamId
-      }
+      command: `give ${inputs.entityId} ${inputs.itemName} ${inputs.amount}`
     }).exec({
-      success: function (result) {
-        return exits.success(result)
+      success: function (response) {
+        if (response.result.includes("Playername or entity id not found")) {
+          return exits.playerNotFound(response)
+        }
+
+        if (response.result.includes("Dropped item")) {
+          return exits.success(response)
+        }
+
+        if (response.result.includes("Item not found")) {
+          return exits.itemNotFound(response)
+        }
+
+        return exits.error(new Error(`Unknown response type ${response.result}`))
       },
       connectionRefused: function (error) {
         return exits.connectionRefused(error)
@@ -106,12 +147,12 @@ module.exports = {
       unauthorized: function (error) {
         return exits.unauthorized(error)
       },
-      internalError: function (error) {
-        return exits.badSteamId(error)
-      },
       error: function (error) {
         return exits.error(error)
       }
     })
   },
+
+
+
 };

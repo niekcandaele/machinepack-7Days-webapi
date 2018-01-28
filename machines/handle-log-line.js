@@ -1,4 +1,5 @@
-const _ = require("lodash")
+const _ = require("lodash");
+var geoip = require('geoip-ultralight');
 
 module.exports = {
 
@@ -123,6 +124,7 @@ module.exports = {
             let steamID = logMsg[3].replace("steamid=", "").trim()
             let steamOwner = logMsg[4].replace("steamOwner=", "").trim()
             let ip = logMsg[5].replace("ip=", "").trim()
+            let country = geoip.lookupCountry(ip);
 
             let connectedMsg = {
                 entityID,
@@ -130,6 +132,7 @@ module.exports = {
                 steamID,
                 steamOwner,
                 ip,
+                country,
                 date,
                 time
             }
