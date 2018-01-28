@@ -30,6 +30,7 @@
         "machineDir": "machines/",
         "machines": [
             "send-request",
+			"teleport-player",
             "execute-command",
             "get-allowed-commands",
             "get-server-info",
