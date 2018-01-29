@@ -47,7 +47,8 @@
       "handle-log-line",
       "ban-player",
       "give-item",
-      "unban-player"
+      "unban-player",
+      "teleport-player"
     ],
     "testsUrl": "https://travis-ci.org/"
   }
