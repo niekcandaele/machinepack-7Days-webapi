@@ -112,9 +112,10 @@ module.exports = {
         if (response.result.includes('Playername or entity/steamid id not found.')) {
           return exits.unknownPlayer("Playername or entity/steamid id not found.")
         }
-        if (_.startsWith(response.result, "teleporting player")) {
+        if (response.result == '') {
           return exits.success(response);
         }
+        console.log(response)
         return exits.error(new Error(`Unknown response! ${response.result}`))
       },
       connectionRefused: function (error) {
