@@ -119,12 +119,18 @@ module.exports = {
 
   fn: function (inputs, exits) {
 
+    let quality = Math.floor((Math.random() * 600) + 1);
+
+    if (!isNaN(inputs.quality) && (1 < inputs.quality < 600)) {
+      quality = inputs.quality
+    }
+
     executeCommand({
       ip: inputs.ip,
       port: inputs.port,
       authName: inputs.authName,
       authToken: inputs.authToken,
-      command: `give ${inputs.entityId} ${inputs.itemName} ${inputs.amount}`
+      command: `give ${inputs.entityId} ${inputs.itemName} ${inputs.amount} ${quality}`
     }).exec({
       success: function (response) {
         if (response.result.includes("Playername or entity id not found")) {
