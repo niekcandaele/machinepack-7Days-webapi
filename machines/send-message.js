@@ -52,7 +52,7 @@ module.exports = {
                 description: 'Set in webpermission.xml or with webtokens telnet command'
             }
         },
-        playerID: {
+        playerId: {
             type: 'string',
             description: 'Entity ID of the player to kick',
             example: '76561198028175841'

@@ -1,6 +1,6 @@
 {
   "name": "machinepack-7daystodiewebapi",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "Interact with a 7 Days to Die web API",
   "scripts": {
     "test": "mocha ./test/*.test.js"
@@ -48,7 +48,8 @@
       "ban-player",
       "give-item",
       "unban-player",
-      "list-items"
+      "list-items",
+      "teleport-player"
     ],
     "testsUrl": "https://travis-ci.org/"
   }
