@@ -106,7 +106,7 @@ module.exports = {
         if (_.isUndefined(inputs.playerID)) {
             command = `say "${inputs.message}"`
         } else {
-            command = `pm ${inputs.playerID} ${inputs.message}`
+            command = `pm ${inputs.playerID} "${inputs.message}"`
         }
 
         executeCommand({
