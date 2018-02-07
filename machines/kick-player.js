@@ -109,7 +109,7 @@ module.exports = {
             port: inputs.port,
             authName: inputs.authName,
             authToken: inputs.authToken,
-            command: `kick ${inputs.playerId} ${reason}`
+            command: `kick ${inputs.playerId} "${reason}"`
         }).exec({
             success: function(response) {
                 if (response.result == '*** ERROR: Executing command \'kick\' failed: Object reference not set to an instance of an object\n') {

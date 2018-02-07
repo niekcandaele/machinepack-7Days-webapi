@@ -121,7 +121,6 @@ class logEmitter extends EventEmitter {
                 },
             })
         }, 2000)
-
     }
 
     stop() {
