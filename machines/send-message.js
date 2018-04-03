@@ -7,7 +7,7 @@ module.exports = {
     description: 'Send a message to the server or pm a player',
 
 
-    extendedDescription: 'Broadcast a message, if a playerID is provided; send a PM',
+    extendedDescription: 'Broadcast a message, if a playerId is provided; send a PM',
 
 
     cacheable: false,
@@ -54,7 +54,7 @@ module.exports = {
         },
         playerId: {
             type: 'string',
-            description: 'Entity ID of the player to kick',
+            description: 'Entity/steam ID of the player to send a message to',
             example: '76561198028175841'
         },
 
@@ -103,10 +103,10 @@ module.exports = {
         var executeCommand = require('machine').build(require('./execute-command.js'))
 
         let command
-        if (_.isUndefined(inputs.playerID)) {
+        if (_.isUndefined(inputs.playerId)) {
             command = `say "${inputs.message}"`
         } else {
-            command = `pm ${inputs.playerID} "${inputs.message}"`
+            command = `pm ${inputs.playerId} "${inputs.message}"`
         }
 
         executeCommand({
