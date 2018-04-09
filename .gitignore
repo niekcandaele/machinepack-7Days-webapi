@@ -32,3 +32,4 @@ coverage
 ############################
 .node_history
 .vscode/
+.nyc_output/

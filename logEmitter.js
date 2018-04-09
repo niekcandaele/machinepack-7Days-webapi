@@ -6,7 +6,7 @@ var handleLogLine = require('machine').build(require('./machines/handle-log-line
 process.on('unhandledRejection', (reason, p) => {
     console.log('Unhandled Rejection at: Promise', p, 'reason:', reason);
     console.log(reason.stack)
-        // application specific logging, throwing an error, or other logic here
+    // application specific logging, throwing an error, or other logic here
 });
 
 class logEmitter extends EventEmitter {
@@ -38,19 +38,19 @@ class logEmitter extends EventEmitter {
             authToken: authToken,
             apiModule: "getwebuiupdates",
         }).exec({
-            error: function(error) {
+            error: function (error) {
                 if (!failed) {
                     failed = true
                     eventEmitter.emit("connectionLost", error)
                 }
             },
-            success: function(response) {
+            success: function (response) {
                 eventEmitter.emit("connected")
                 lastLogLine = response.newlogs
             },
         });
 
-        this.requestInterval = setInterval(async function() {
+        this.requestInterval = setInterval(async function () {
             // Get the new log lines
             sendRequest({
                 ip: ip,
@@ -62,7 +62,7 @@ class logEmitter extends EventEmitter {
                     firstLine: lastLogLine
                 },
             }).exec({
-                error: function(error) {
+                error: function (error) {
                     if (!failed) {
                         failed = true
                         eventEmitter.emit("connectionLost", error)
@@ -70,7 +70,7 @@ class logEmitter extends EventEmitter {
 
 
                 },
-                success: function(response) {
+                success: function (response) {
                     if (!_.isUndefined(response.lastLine)) {
                         lastLogLine = response.lastLine
                     }
@@ -87,32 +87,34 @@ class logEmitter extends EventEmitter {
                             authToken: authToken,
                             apiModule: "getwebuiupdates",
                         }).exec({
-                            error: function(error) {
+                            error: function (error) {
                                 console.log("Error getting latest log line " + error)
                             },
-                            success: function(response) {
+                            success: function (response) {
                                 lastLogLine = response.newlogs
                             },
                         });
                     };
 
 
-                    _.each(response.entries, function(line) {
+                    _.each(response.entries, function (line) {
                         eventEmitter.emit('logLine', line);
                         handleLogLine({ logLine: line }).exec({
-                            chatMessage: function(chatMessage) {
+                            chatMessage: function (chatMessage) {
+                                console.log(chatMessage)
                                 eventEmitter.emit('chatMessage', chatMessage)
+
                             },
-                            playerConnected: function(connectedMsg) {
+                            playerConnected: function (connectedMsg) {
                                 eventEmitter.emit('playerConnected', connectedMsg)
                             },
-                            playerDisconnected: function(disconnectedMsg) {
+                            playerDisconnected: function (disconnectedMsg) {
                                 eventEmitter.emit('playerDisconnected', disconnectedMsg)
                             },
-                            playerDeath: function(deathMessage) {
+                            playerDeath: function (deathMessage) {
                                 eventEmitter.emit('playerDeath', deathMessage)
                             },
-                            error: function(error) {
+                            error: function (error) {
                                 eventEmitter.emit('error', error)
                             }
                         })

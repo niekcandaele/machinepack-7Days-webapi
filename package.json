@@ -3,7 +3,7 @@
   "version": "0.3.2",
   "description": "Interact with a 7 Days to Die web API",
   "scripts": {
-    "test": "mocha ./test/*.test.js"
+    "test": "nyc mocha ./test/*.test.js"
   },
   "keywords": [
     "7 days to die web api",
@@ -22,6 +22,7 @@
   },
   "devDependencies": {
     "mocha": "^4.0.1",
+    "nyc": "^11.6.0",
     "supertest": "^3.0.0",
     "test-machinepack-mocha": "^2.1.5"
   },

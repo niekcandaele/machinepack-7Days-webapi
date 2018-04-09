@@ -66,7 +66,7 @@ module.exports = {
     },
 
 
-    fn: function(inputs, exits) {
+    fn: function (inputs, exits) {
 
         const logLine = inputs.logLine;
 
@@ -81,6 +81,7 @@ module.exports = {
               "type": "Log"
             }
             */
+
             let firstIdx = logLine.msg.indexOf('\'');
             let secondIdx = logLine.msg.indexOf('\'', firstIdx + 1)
             let playerName = logLine.msg.slice(firstIdx + 1, secondIdx)
@@ -91,6 +92,17 @@ module.exports = {
             let type = "chat"
             if (playerName == 'Server') {
                 type = "server"
+            }
+
+            /*
+            Workaround for when the server uses a mods to alter player name colour
+            Server tools & Coppis
+            */
+            if (playerName.includes('[-]') && playerName.includes("](")) {
+                let roleColourDividerIndex = playerName.indexOf("](")
+                let roleEndIndex = playerName.indexOf(")", roleColourDividerIndex);
+                let newPlayerName = playerName.substring(roleEndIndex+2).replace('[-]', '');
+                playerName = newPlayerName;
             }
 
             chatMessage = {
