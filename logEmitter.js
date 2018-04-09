@@ -101,7 +101,6 @@ class logEmitter extends EventEmitter {
                         eventEmitter.emit('logLine', line);
                         handleLogLine({ logLine: line }).exec({
                             chatMessage: function (chatMessage) {
-                                console.log(chatMessage)
                                 eventEmitter.emit('chatMessage', chatMessage)
 
                             },
