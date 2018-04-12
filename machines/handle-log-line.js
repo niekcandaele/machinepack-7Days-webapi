@@ -63,12 +63,51 @@ module.exports = {
             description: 'A player died.'
         },
 
+        memUpdate: {
+            variableName: 'memUpdate',
+            description: 'Periodic server status updates'
+        }
+
     },
 
 
     fn: function (inputs, exits) {
 
         const logLine = inputs.logLine;
+        if (_.startsWith(logLine.msg, 'Time:')) {
+            // {
+            //     date: '2018-04-12',
+            //     time: '22:01:21',
+            //     uptime: '72067.431',
+            //     msg: 'Time: 1200.60m FPS: 36.24 Heap: 769.5MB Max: 924.2MB Chunks: 361 CGO: 14 Ply: 1 Zom: 10 Ent: 11 (20) Items: 0 CO: 2 RSS: 1440.9MB',
+            //     trace: '',
+            //     type: 'Log'
+            // }
+
+            // Find the positions of the data points
+            let splitLogLine = logLine.msg.split(' ');
+            let fpsIdx = splitLogLine.indexOf('Time:');
+            let heapIdx = splitLogLine.indexOf('Heap:');
+            let chunksIdx = splitLogLine.indexOf('Chunks:');
+            let zombiesIdx = splitLogLine.indexOf('Zom:');
+            let entitiesIdx = splitLogLine.indexOf('Ent:');
+            let playersIdx = splitLogLine.indexOf('Ply:');
+            let itemsIdx = splitLogLine.indexOf('Items:');
+            let rssIdx = splitLogLine.indexOf('RSS:');
+
+            let memUpdate = {
+                fps: fpsIdx == -1 ? '' : splitLogLine[fpsIdx + 1],
+                heap: heapIdx == -1 ? '' : splitLogLine[heapIdx + 1],
+                chunks: chunksIdx == -1 ? '' : splitLogLine[chunksIdx + 1],
+                zombies: zombiesIdx == -1 ? '' : splitLogLine[zombiesIdx + 1],
+                entities: entitiesIdx == -1 ? '' : splitLogLine[entitiesIdx + 1],
+                players: playersIdx == -1 ? '' : splitLogLine[playersIdx + 1],
+                items: itemsIdx == -1 ? '' : splitLogLine[itemsIdx+1],
+                rss: rssIdx == -1 ? '' : splitLogLine[rssIdx+1],
+                uptime: logLine.uptime
+            }
+
+        }
 
         if (_.startsWith(logLine.msg, 'Chat:')) {
             /*
@@ -101,7 +140,7 @@ module.exports = {
             if (playerName.includes('[-]') && playerName.includes("](")) {
                 let roleColourDividerIndex = playerName.indexOf("](")
                 let roleEndIndex = playerName.indexOf(")", roleColourDividerIndex);
-                let newPlayerName = playerName.substring(roleEndIndex+2).replace('[-]', '');
+                let newPlayerName = playerName.substring(roleEndIndex + 2).replace('[-]', '');
                 playerName = newPlayerName;
             }
 

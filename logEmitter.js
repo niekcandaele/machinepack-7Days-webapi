@@ -113,6 +113,9 @@ class logEmitter extends EventEmitter {
                             playerDeath: function (deathMessage) {
                                 eventEmitter.emit('playerDeath', deathMessage)
                             },
+                            memUpdate: function (memUpdate) {
+                                eventEmitter.emit('memUpdate', memUpdate);
+                            },
                             error: function (error) {
                                 eventEmitter.emit('error', error)
                             }
