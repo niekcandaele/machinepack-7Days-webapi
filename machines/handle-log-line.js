@@ -107,6 +107,8 @@ module.exports = {
                 uptime: logLine.uptime
             }
 
+            return exits.memUpdate(memUpdate);
+
         }
 
         if (_.startsWith(logLine.msg, 'Chat:')) {
