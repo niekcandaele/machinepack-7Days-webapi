@@ -86,7 +86,7 @@ module.exports = {
 
             // Find the positions of the data points
             let splitLogLine = logLine.msg.split(' ');
-            let fpsIdx = splitLogLine.indexOf('Time:');
+            let fpsIdx = splitLogLine.indexOf('FPS:');
             let heapIdx = splitLogLine.indexOf('Heap:');
             let chunksIdx = splitLogLine.indexOf('Chunks:');
             let zombiesIdx = splitLogLine.indexOf('Zom:');
