@@ -126,7 +126,7 @@ module.exports = {
       port: inputs.port,
       authName: inputs.authName,
       authToken: inputs.authToken,
-      command: `ban add ${inputs.playerId} ${inputs.duration} ${inputs.durationUnit} ${inputs.reason}`
+      command: `ban add ${inputs.playerId} ${inputs.duration} ${inputs.durationUnit} "${inputs.reason}"`
     }).exec({
       success: function (response) {
         return exits.success(response)
