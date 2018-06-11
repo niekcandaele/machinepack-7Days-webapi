@@ -112,7 +112,6 @@ module.exports = {
         }
 
         if (_.startsWith(logLine.msg, 'Chat:')) {
-            console.log(logLine)
             /*
             {
               "date": "2017-11-14",
