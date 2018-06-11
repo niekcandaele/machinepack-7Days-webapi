@@ -72,7 +72,7 @@ module.exports = {
 
 
     fn: function (inputs, exits) {
-
+        
         const logLine = inputs.logLine;
         if (_.startsWith(logLine.msg, 'Time:')) {
             // {
@@ -112,6 +112,7 @@ module.exports = {
         }
 
         if (_.startsWith(logLine.msg, 'Chat:')) {
+            console.log(logLine)
             /*
             {
               "date": "2017-11-14",
@@ -136,8 +137,8 @@ module.exports = {
             }
 
             /*
-            Workaround for when the server uses a mods to alter player name colour
-            Server tools & Coppis
+            Workaround for when the server uses servertools roles
+            Server tools 
             */
             if (playerName.includes('[-]') && playerName.includes("](")) {
                 let roleColourDividerIndex = playerName.indexOf("](")
@@ -145,6 +146,16 @@ module.exports = {
                 let newPlayerName = playerName.substring(roleEndIndex + 2).replace('[-]', '');
                 playerName = newPlayerName;
             }
+
+            /**
+             * Workaround for coppi colours (with the colour ending indicator [-])
+             */
+
+             if (playerName.includes('[-]')) {
+                let colourEndIdx = playerName.indexOf("]");
+                let newPlayerName = playerName.substring(colourEndIdx + 1).replace('[-]', '');
+                playerName = newPlayerName
+             }
 
             chatMessage = {
                 playerName,
