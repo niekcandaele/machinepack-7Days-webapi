@@ -104,13 +104,17 @@ module.exports = {
 
         let items = new Array();
 
+        if (!response) {
+          return exits.error();
+        }
+
         let splitResult = response.result.split(/\r?\n/)
 
         splitResult.forEach((element) => {
           element = element.trim()
           items.push(element);
         })
-        items = items.slice(0, items.length-2)
+        items = items.slice(0, items.length - 2)
         return exits.success(items)
       },
       connectionRefused: function (error) {
