@@ -1,6 +1,6 @@
 {
   "name": "machinepack-7daystodiewebapi",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Interact with a 7 Days to Die web API",
   "scripts": {
     "test": "nyc mocha ./test/*.test.js"
